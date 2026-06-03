@@ -1,0 +1,85 @@
+<aside
+  class="fixed inset-y-0 left-0 z-40 w-72 -translate-x-full border-r border-slate-200 bg-white/95 shadow-xl backdrop-blur transition dark:border-slate-800 dark:bg-slate-950/95 lg:translate-x-0"
+  :class="{ 'translate-x-0': sidebarOpen }"
+>
+  <div class="flex h-full flex-col">
+    <div class="flex h-16 items-center gap-3 border-b border-slate-200 px-5 dark:border-slate-800">
+      <div class="grid h-10 w-10 place-items-center rounded-md bg-teal-600 text-lg font-black text-white">B</div>
+      <div>
+        <p class="text-sm font-black uppercase tracking-wide text-slate-900 dark:text-white">Biblioteca</p>
+        <p class="text-xs font-semibold text-slate-500 dark:text-slate-400">{{ authUser.role.name }}</p>
+      </div>
+    </div>
+
+    <nav class="flex-1 space-y-1 overflow-y-auto px-3 py-4 text-sm font-semibold">
+      @if(authUser.role.name !== 'Estudiante')
+        <a href="/dashboard" class="flex items-center gap-3 rounded-md px-3 py-2.5 {{ currentPath.startsWith('/dashboard') ? 'bg-teal-50 text-teal-700 dark:bg-teal-500/15 dark:text-teal-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-900' }}">
+          <span class="w-5 text-center">D</span> Dashboard
+        </a>
+      @endif
+
+      @if(authUser.role.name === 'Estudiante')
+        <a href="/student" class="flex items-center gap-3 rounded-md px-3 py-2.5 {{ currentPath === '/student' ? 'bg-teal-50 text-teal-700 dark:bg-teal-500/15 dark:text-teal-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-900' }}">
+          <span class="w-5 text-center">M</span> Mi panel
+        </a>
+      @endif
+
+      <a href="/books" class="flex items-center gap-3 rounded-md px-3 py-2.5 {{ currentPath.startsWith('/books') ? 'bg-teal-50 text-teal-700 dark:bg-teal-500/15 dark:text-teal-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-900' }}">
+        <span class="w-5 text-center">B</span> Libros
+      </a>
+
+      @if(authUser.role.name !== 'Estudiante')
+        <a href="/loans" class="flex items-center gap-3 rounded-md px-3 py-2.5 {{ currentPath.startsWith('/loans') ? 'bg-teal-50 text-teal-700 dark:bg-teal-500/15 dark:text-teal-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-900' }}">
+          <span class="w-5 text-center">L</span> Prestamos
+        </a>
+        <a href="/inventory" class="flex items-center gap-3 rounded-md px-3 py-2.5 {{ currentPath.startsWith('/inventory') ? 'bg-teal-50 text-teal-700 dark:bg-teal-500/15 dark:text-teal-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-900' }}">
+          <span class="w-5 text-center">I</span> Inventario
+        </a>
+        <a href="/users" class="flex items-center gap-3 rounded-md px-3 py-2.5 {{ currentPath.startsWith('/users') ? 'bg-teal-50 text-teal-700 dark:bg-teal-500/15 dark:text-teal-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-900' }}">
+          <span class="w-5 text-center">U</span> Usuarios
+        </a>
+      @endif
+
+      @if(authUser.role.name === 'Administrador')
+        <a href="/publishers" class="flex items-center gap-3 rounded-md px-3 py-2.5 {{ currentPath.startsWith('/publishers') ? 'bg-teal-50 text-teal-700 dark:bg-teal-500/15 dark:text-teal-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-900' }}">
+          <span class="w-5 text-center">P</span> Editoriales
+        </a>
+        <a href="/categories" class="flex items-center gap-3 rounded-md px-3 py-2.5 {{ currentPath.startsWith('/categories') ? 'bg-teal-50 text-teal-700 dark:bg-teal-500/15 dark:text-teal-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-900' }}">
+          <span class="w-5 text-center">C</span> Categorias
+        </a>
+        <a href="/reports" class="flex items-center gap-3 rounded-md px-3 py-2.5 {{ currentPath.startsWith('/reports') ? 'bg-teal-50 text-teal-700 dark:bg-teal-500/15 dark:text-teal-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-900' }}">
+          <span class="w-5 text-center">R</span> Reportes
+        </a>
+      @endif
+
+      @if(authUser.role.name === 'Estudiante')
+        <a href="/student/history" class="flex items-center gap-3 rounded-md px-3 py-2.5 {{ currentPath.startsWith('/student/history') ? 'bg-teal-50 text-teal-700 dark:bg-teal-500/15 dark:text-teal-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-900' }}">
+          <span class="w-5 text-center">H</span> Historial
+        </a>
+        <a href="/student/recommendations" class="flex items-center gap-3 rounded-md px-3 py-2.5 {{ currentPath.startsWith('/student/recommendations') ? 'bg-teal-50 text-teal-700 dark:bg-teal-500/15 dark:text-teal-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-900' }}">
+          <span class="w-5 text-center">*</span> Recomendaciones
+        </a>
+      @endif
+    </nav>
+
+    <div class="border-t border-slate-200 p-4 dark:border-slate-800">
+      <div class="mb-3 rounded-md bg-slate-100 p-3 dark:bg-slate-900">
+        <p class="text-sm font-bold text-slate-900 dark:text-white">{{ authUser.fullName }}</p>
+        <p class="text-xs text-slate-500 dark:text-slate-400">{{ authUser.email }}</p>
+      </div>
+      <form method="POST" action="/logout">
+        {{ csrfField() }}
+        <button class="focus-ring w-full rounded-md bg-slate-900 px-3 py-2 text-sm font-bold text-white hover:bg-slate-700 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200">
+          Cerrar sesion
+        </button>
+      </form>
+    </div>
+  </div>
+</aside>
+
+<div
+  x-cloak
+  x-show="sidebarOpen"
+  class="fixed inset-0 z-30 bg-slate-950/40 lg:hidden"
+  @click="sidebarOpen = false"
+></div>

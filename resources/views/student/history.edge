@@ -1,0 +1,38 @@
+@let(pageTitle = 'Historial')
+@include('partials/head')
+@include('partials/page_start')
+
+<section class="rounded-md border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
+  <div class="border-b border-slate-200 px-5 py-4 dark:border-slate-800">
+    <h2 class="font-black">Historial de prestamos</h2>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="w-full min-w-[820px] text-left">
+      <thead class="bg-slate-50 text-xs font-black uppercase text-slate-500 dark:bg-slate-900 dark:text-slate-400">
+        <tr>
+          <th class="table-cell">Libro</th>
+          <th class="table-cell">Prestamo</th>
+          <th class="table-cell">Vencimiento</th>
+          <th class="table-cell">Devolucion</th>
+          <th class="table-cell">Estado</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+        @each((loan) in loans)
+          <tr>
+            <td class="table-cell">
+              <p class="font-bold">{{ loan.book.title }}</p>
+              <p class="text-xs text-slate-500">{{ loan.book.author }}</p>
+            </td>
+            <td class="table-cell">{{ loan.loanDate.toFormat('dd/LL/yyyy') }}</td>
+            <td class="table-cell">{{ loan.dueDate.toFormat('dd/LL/yyyy') }}</td>
+            <td class="table-cell">{{ loan.returnedAt ? loan.returnedAt.toFormat('dd/LL/yyyy') : '-' }}</td>
+            <td class="table-cell"><span class="badge {{ loan.status === 'OVERDUE' ? 'bg-rose-50 text-rose-700' : loan.status === 'RETURNED' ? 'bg-emerald-50 text-emerald-700' : 'bg-blue-50 text-blue-700' }}">{{ loan.status }}</span></td>
+          </tr>
+        @endeach
+      </tbody>
+    </table>
+  </div>
+</section>
+
+@include('partials/page_end')

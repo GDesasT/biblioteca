@@ -1,0 +1,90 @@
+@let(pageTitle = 'Reportes')
+@include('partials/head')
+@include('partials/page_start')
+
+<section class="grid gap-6 xl:grid-cols-2">
+  <div class="rounded-md border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
+    <div class="border-b border-slate-200 px-5 py-4 dark:border-slate-800">
+      <h2 class="font-black">Prestamos por mes</h2>
+    </div>
+    <div class="divide-y divide-slate-100 dark:divide-slate-800">
+      @each((row) in monthlyLoans)
+        <div class="flex items-center justify-between px-5 py-4">
+          <span class="font-bold">{{ row.period }}</span>
+          <span class="badge bg-teal-50 text-teal-700 dark:bg-teal-500/15 dark:text-teal-200">{{ row.total }}</span>
+        </div>
+      @endeach
+    </div>
+  </div>
+
+  <div class="rounded-md border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
+    <div class="border-b border-slate-200 px-5 py-4 dark:border-slate-800">
+      <h2 class="font-black">Categorias mas populares</h2>
+    </div>
+    <div class="divide-y divide-slate-100 dark:divide-slate-800">
+      @each((row) in popularCategories)
+        <div class="flex items-center justify-between px-5 py-4">
+          <span class="font-bold">{{ row.name }}</span>
+          <span class="badge bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-200">{{ row.total }}</span>
+        </div>
+      @endeach
+    </div>
+  </div>
+</section>
+
+<section class="mt-6 rounded-md border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
+  <div class="border-b border-slate-200 px-5 py-4 dark:border-slate-800">
+    <h2 class="font-black">Top libros</h2>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="w-full min-w-[720px] text-left">
+      <thead class="bg-slate-50 text-xs font-black uppercase text-slate-500 dark:bg-slate-900 dark:text-slate-400">
+        <tr>
+          <th class="table-cell">Titulo</th>
+          <th class="table-cell">Autor</th>
+          <th class="table-cell text-right">Prestamos</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+        @each((book) in topBooks)
+          <tr>
+            <td class="table-cell font-bold">{{ book.title }}</td>
+            <td class="table-cell text-slate-500">{{ book.author }}</td>
+            <td class="table-cell text-right font-black">{{ book.total }}</td>
+          </tr>
+        @endeach
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="mt-6 rounded-md border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
+  <div class="border-b border-slate-200 px-5 py-4 dark:border-slate-800">
+    <h2 class="font-black">Prestamos vencidos</h2>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="w-full min-w-[720px] text-left">
+      <thead class="bg-slate-50 text-xs font-black uppercase text-slate-500 dark:bg-slate-900 dark:text-slate-400">
+        <tr>
+          <th class="table-cell">Usuario</th>
+          <th class="table-cell">Libro</th>
+          <th class="table-cell">Vence</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+        @each((loan) in overdueUsers)
+          <tr>
+            <td class="table-cell">
+              <p class="font-bold">{{ loan.full_name }}</p>
+              <p class="text-xs text-slate-500">{{ loan.user_number }}</p>
+            </td>
+            <td class="table-cell">{{ loan.title }}</td>
+            <td class="table-cell text-rose-600">{{ loan.due_date }}</td>
+          </tr>
+        @endeach
+      </tbody>
+    </table>
+  </div>
+</section>
+
+@include('partials/page_end')

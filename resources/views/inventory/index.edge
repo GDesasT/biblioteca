@@ -1,0 +1,63 @@
+@let(pageTitle = 'Inventario')
+@include('partials/head')
+@include('partials/page_start')
+
+<section class="mb-5 grid gap-4 md:grid-cols-3">
+  <div class="rounded-md border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+    <p class="text-sm font-bold text-slate-500">Categorias</p>
+    <p class="mt-2 text-3xl font-black">{{ summary.categories }}</p>
+  </div>
+  <div class="rounded-md border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+    <p class="text-sm font-bold text-slate-500">Editoriales</p>
+    <p class="mt-2 text-3xl font-black">{{ summary.publishers }}</p>
+  </div>
+  <form method="GET" action="/inventory" class="rounded-md border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+    <label class="text-sm font-bold text-slate-500">Buscar</label>
+    <div class="mt-2 flex gap-2">
+      <input name="search" value="{{ search }}" class="focus-ring min-w-0 flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900" />
+      <button class="rounded-md bg-slate-900 px-3 py-2 text-sm font-black text-white dark:bg-white dark:text-slate-950">Ir</button>
+    </div>
+  </form>
+</section>
+
+<section class="rounded-md border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
+  <div class="overflow-x-auto">
+    <table class="w-full min-w-[860px] text-left">
+      <thead class="bg-slate-50 text-xs font-black uppercase text-slate-500 dark:bg-slate-900 dark:text-slate-400">
+        <tr>
+          <th class="table-cell">Libro</th>
+          <th class="table-cell">Categoria</th>
+          <th class="table-cell">Total</th>
+          <th class="table-cell">Disponible</th>
+          <th class="table-cell">Prestado</th>
+          <th class="table-cell">Estado</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+        @each((book) in books)
+          <tr>
+            <td class="table-cell">
+              <p class="font-bold">{{ book.title }}</p>
+              <p class="text-xs text-slate-500">{{ book.isbn }}</p>
+            </td>
+            <td class="table-cell">{{ book.category.name }}</td>
+            <td class="table-cell font-black">{{ book.totalUnits }}</td>
+            <td class="table-cell font-black text-emerald-600">{{ book.availableUnits }}</td>
+            <td class="table-cell font-black text-blue-600">{{ book.loanedUnits }}</td>
+            <td class="table-cell">
+              <span class="badge {{ book.availableUnits > 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700' }}">{{ book.availableUnits > 0 ? 'Disponible' : 'Agotado' }}</span>
+            </td>
+          </tr>
+        @endeach
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="mt-6 flex items-center justify-between rounded-md border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950">
+  <a href="{{ books.getPreviousPageUrl() || '#' }}" class="rounded-md px-3 py-2 text-sm font-bold {{ books.getPreviousPageUrl() ? 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900' : 'pointer-events-none text-slate-400' }}">Anterior</a>
+  <span class="text-sm font-bold text-slate-500">Pagina {{ books.currentPage }} de {{ books.lastPage }}</span>
+  <a href="{{ books.getNextPageUrl() || '#' }}" class="rounded-md px-3 py-2 text-sm font-bold {{ books.getNextPageUrl() ? 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900' : 'pointer-events-none text-slate-400' }}">Siguiente</a>
+</div>
+
+@include('partials/page_end')

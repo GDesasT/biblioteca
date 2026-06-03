@@ -1,0 +1,12 @@
+<header class="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-slate-200 bg-white/80 px-4 backdrop-blur dark:border-slate-800 dark:bg-slate-950/75 lg:px-8">
+  <button class="focus-ring rounded-md border border-slate-200 px-3 py-2 text-sm font-bold text-slate-700 dark:border-slate-700 dark:text-slate-200 lg:hidden" @click="sidebarOpen = true">
+    Menu
+  </button>
+  <div>
+    <p class="text-xs font-bold uppercase text-teal-700 dark:text-teal-300">Sistema local</p>
+    <h1 class="text-lg font-black text-slate-950 dark:text-white">{{ pageTitle }}</h1>
+  </div>
+  <button class="focus-ring rounded-md border border-slate-200 px-3 py-2 text-sm font-bold text-slate-700 dark:border-slate-700 dark:text-slate-200" @click="darkMode = !darkMode">
+    Tema
+  </button>
+</header>

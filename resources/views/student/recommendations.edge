@@ -1,0 +1,25 @@
+@let(pageTitle = 'Recomendaciones')
+@include('partials/head')
+@include('partials/page_start')
+
+<section class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+  @each((book) in recommendations)
+    <article class="rounded-md border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+      <div class="flex gap-4">
+        <img src="{{ book.coverImage || '/images/covers/cover-1.svg' }}" alt="" class="h-36 w-24 rounded-md object-cover" />
+        <div class="min-w-0 flex-1">
+          <h2 class="font-black">{{ book.title }}</h2>
+          <p class="mt-1 text-sm text-slate-500">{{ book.author }}</p>
+          <p class="mt-2 text-xs font-bold text-slate-500">{{ book.category.name }} - {{ book.publisher.name }}</p>
+          <p class="mt-2 text-sm"><strong>{{ book.availableUnits }}</strong> disponibles</p>
+        </div>
+      </div>
+      <form method="POST" action="/student/books/{{ book.id }}/request" class="mt-4">
+        {{ csrfField() }}
+        <button class="w-full rounded-md bg-teal-600 px-3 py-2 text-sm font-black text-white hover:bg-teal-700">Solicitar prestamo</button>
+      </form>
+    </article>
+  @endeach
+</section>
+
+@include('partials/page_end')

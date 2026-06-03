@@ -1,0 +1,6 @@
+<body x-data="{ sidebarOpen: false, darkMode: false }" :class="{ 'dark': darkMode }" class="admin-shell min-h-screen text-slate-900 dark:text-slate-100">
+  <div class="min-h-screen lg:pl-72">
+    @include('partials/sidebar')
+    @include('partials/topbar')
+    <main class="px-4 py-6 lg:px-8">
+      @include('partials/flash')
