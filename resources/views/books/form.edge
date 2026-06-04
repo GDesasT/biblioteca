@@ -2,16 +2,16 @@
 @include('partials/head')
 @include('partials/page_start')
 
-<section class="mx-auto max-w-4xl rounded-md border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+<section class="mx-auto max-w-4xl rounded-lg border border-emerald-100 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
   <div class="mb-6 flex items-center justify-between">
     <div>
-      <p class="text-sm font-bold text-slate-500">Catalogo</p>
+      <p class="text-sm font-bold text-slate-600">Catalogo</p>
       <h2 class="text-2xl font-black">{{ pageTitle }}</h2>
     </div>
-    <a href="/books" class="rounded-md border border-slate-300 px-3 py-2 text-sm font-bold dark:border-slate-700">Volver</a>
+    <a href="/books" class="rounded-lg border border-emerald-200 px-3 py-2 text-sm font-bold dark:border-slate-700">Volver</a>
   </div>
 
-  <form method="POST" action="{{ book ? `/books/${book.id}` : '/books' }}" class="grid gap-5 md:grid-cols-2">
+  <form method="POST" action="{{ book ? `/books/${book.id}?_method=PUT` : '/books' }}" class="grid gap-5 md:grid-cols-2">
     {{ csrfField() }}
     @if(book)
       <input type="hidden" name="_method" value="PUT" />
@@ -19,22 +19,22 @@
 
     <label class="block md:col-span-2">
       <span class="text-sm font-bold">Titulo</span>
-      <input name="title" value="{{ book ? book.title : '' }}" required class="focus-ring mt-2 w-full rounded-md border border-slate-300 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900" />
+      <input name="title" value="{{ book ? book.title : '' }}" required class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-[#7a1438]" />
     </label>
 
     <label class="block">
       <span class="text-sm font-bold">Autor</span>
-      <input name="author" value="{{ book ? book.author : '' }}" required class="focus-ring mt-2 w-full rounded-md border border-slate-300 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900" />
+      <input name="author" value="{{ book ? book.author : '' }}" required class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-[#7a1438]" />
     </label>
 
     <label class="block">
       <span class="text-sm font-bold">ISBN</span>
-      <input name="isbn" value="{{ book ? book.isbn : '' }}" required class="focus-ring mt-2 w-full rounded-md border border-slate-300 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900" />
+      <input name="isbn" value="{{ book ? book.isbn : '' }}" required class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-[#7a1438]" />
     </label>
 
     <label class="block">
       <span class="text-sm font-bold">Editorial</span>
-      <select name="publisherId" required class="focus-ring mt-2 w-full rounded-md border border-slate-300 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900">
+      <select name="publisherId" required class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-[#7a1438]">
         @each((publisher) in publishers)
           <option value="{{ publisher.id }}" {{ book && book.publisherId === publisher.id ? 'selected' : '' }}>{{ publisher.name }}</option>
         @endeach
@@ -43,7 +43,7 @@
 
     <label class="block">
       <span class="text-sm font-bold">Categoria</span>
-      <select name="categoryId" required class="focus-ring mt-2 w-full rounded-md border border-slate-300 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900">
+      <select name="categoryId" required class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-[#7a1438]">
         @each((category) in categories)
           <option value="{{ category.id }}" {{ book && book.categoryId === category.id ? 'selected' : '' }}>{{ category.name }}</option>
         @endeach
@@ -52,7 +52,7 @@
 
     <label class="block">
       <span class="text-sm font-bold">Tipo</span>
-      <select name="type" required class="focus-ring mt-2 w-full rounded-md border border-slate-300 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900">
+      <select name="type" required class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-[#7a1438]">
         <option value="physical" {{ book && book.type === 'physical' ? 'selected' : '' }}>Fisico</option>
         <option value="digital" {{ book && book.type === 'digital' ? 'selected' : '' }}>Digital</option>
         <option value="audiobook" {{ book && book.type === 'audiobook' ? 'selected' : '' }}>Audiolibro</option>
@@ -61,22 +61,22 @@
 
     <label class="block">
       <span class="text-sm font-bold">Unidades totales</span>
-      <input name="totalUnits" type="number" min="1" value="{{ book ? book.totalUnits : 1 }}" required class="focus-ring mt-2 w-full rounded-md border border-slate-300 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900" />
+      <input name="totalUnits" type="number" min="1" value="{{ book ? book.totalUnits : 1 }}" required class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-[#7a1438]" />
     </label>
 
     <label class="block md:col-span-2">
       <span class="text-sm font-bold">Imagen de portada</span>
-      <input name="coverImage" value="{{ book ? book.coverImage : '/images/covers/cover-1.svg' }}" class="focus-ring mt-2 w-full rounded-md border border-slate-300 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900" />
+      <input name="coverImage" value="{{ book ? book.coverImage : '/images/covers/cover-1.svg' }}" class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-[#7a1438]" />
     </label>
 
     <label class="block md:col-span-2">
       <span class="text-sm font-bold">Descripcion</span>
-      <textarea name="description" rows="5" class="focus-ring mt-2 w-full rounded-md border border-slate-300 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900">{{ book ? book.description : '' }}</textarea>
+      <textarea name="description" rows="5" class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-[#7a1438]">{{ book ? book.description : '' }}</textarea>
     </label>
 
     <div class="md:col-span-2 flex justify-end gap-3">
-      <a href="/books" class="rounded-md border border-slate-300 px-4 py-2.5 text-sm font-bold dark:border-slate-700">Cancelar</a>
-      <button class="focus-ring rounded-md bg-teal-600 px-4 py-2.5 text-sm font-black text-white hover:bg-teal-700">Guardar</button>
+      <a href="/books" class="rounded-lg border border-emerald-200 px-4 py-2.5 text-sm font-bold dark:border-slate-700">Cancelar</a>
+      <button class="focus-ring rounded-lg bg-[#18b98f] px-4 py-2.5 text-sm font-black text-white hover:bg-[#129b78]">Guardar</button>
     </div>
   </form>
 </section>

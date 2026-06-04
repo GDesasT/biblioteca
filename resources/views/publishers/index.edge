@@ -4,21 +4,21 @@
 
 <section class="mb-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
   <div>
-    <p class="text-sm font-bold text-slate-500">Catalogo</p>
+    <p class="text-sm font-bold text-slate-600">Catalogo</p>
     <h2 class="text-2xl font-black">Editoriales</h2>
   </div>
-  <a href="/publishers/create" class="focus-ring inline-flex rounded-md bg-teal-600 px-4 py-2.5 text-sm font-black text-white hover:bg-teal-700">Nueva editorial</a>
+  <a href="/publishers/create" class="focus-ring inline-flex rounded-lg bg-[#18b98f] px-4 py-2.5 text-sm font-black text-white hover:bg-[#129b78]">Nueva editorial</a>
 </section>
 
-<form method="GET" action="/publishers" class="mb-5 flex gap-2 rounded-md border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950">
-  <input name="search" value="{{ search }}" class="focus-ring min-w-0 flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900" placeholder="Nombre o pais" />
-  <button class="rounded-md bg-slate-900 px-4 py-2 text-sm font-black text-white dark:bg-white dark:text-slate-950">Buscar</button>
+<form method="GET" action="/publishers" class="mb-5 flex gap-2 rounded-lg border border-emerald-100 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+  <input name="search" value="{{ search }}" class="focus-ring min-w-0 flex-1 rounded-lg border border-emerald-200 px-3 py-2 text-sm dark:border-slate-700 dark:bg-[#7a1438]" placeholder="Nombre o pais" />
+  <button class="rounded-lg bg-[#7a1438] px-4 py-2 text-sm font-black text-white dark:bg-white dark:text-slate-950">Buscar</button>
 </form>
 
-<section class="rounded-md border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
+<section class="rounded-lg border border-emerald-100 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
   <div class="overflow-x-auto">
     <table class="w-full min-w-[720px] text-left">
-      <thead class="bg-slate-50 text-xs font-black uppercase text-slate-500 dark:bg-slate-900 dark:text-slate-400">
+      <thead class="bg-[#f8fffb] text-xs font-black uppercase text-slate-600 dark:bg-[#7a1438] dark:text-slate-400">
         <tr>
           <th class="table-cell">Editorial</th>
           <th class="table-cell">Pais</th>
@@ -30,15 +30,15 @@
         @each((publisher) in publishers)
           <tr>
             <td class="table-cell font-bold">{{ publisher.name }}</td>
-            <td class="table-cell text-slate-500">{{ publisher.country }}</td>
+            <td class="table-cell text-slate-600">{{ publisher.country }}</td>
             <td class="table-cell font-black">{{ publisher.$extras.books_count || 0 }}</td>
             <td class="table-cell">
               <div class="flex justify-end gap-2">
-                <a href="/publishers/{{ publisher.id }}/edit" class="rounded-md border border-slate-300 px-3 py-2 text-sm font-bold dark:border-slate-700">Editar</a>
-                <form method="POST" action="/publishers/{{ publisher.id }}">
+                <a href="/publishers/{{ publisher.id }}/edit" class="rounded-lg border border-emerald-200 px-3 py-2 text-sm font-bold dark:border-slate-700">Editar</a>
+                <form method="POST" action="/publishers/{{ publisher.id }}?_method=DELETE">
                   {{ csrfField() }}
                   <input type="hidden" name="_method" value="DELETE" />
-                  <button class="rounded-md border border-rose-200 px-3 py-2 text-sm font-bold text-rose-700 hover:bg-rose-50 dark:border-rose-900">Eliminar</button>
+                  <button class="rounded-lg border border-rose-200 px-3 py-2 text-sm font-bold text-rose-700 hover:bg-rose-50 dark:border-rose-900">Eliminar</button>
                 </form>
               </div>
             </td>
@@ -49,10 +49,10 @@
   </div>
 </section>
 
-<div class="mt-6 flex items-center justify-between rounded-md border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950">
-  <a href="{{ publishers.getPreviousPageUrl() || '#' }}" class="rounded-md px-3 py-2 text-sm font-bold {{ publishers.getPreviousPageUrl() ? 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900' : 'pointer-events-none text-slate-400' }}">Anterior</a>
-  <span class="text-sm font-bold text-slate-500">Pagina {{ publishers.currentPage }} de {{ publishers.lastPage }}</span>
-  <a href="{{ publishers.getNextPageUrl() || '#' }}" class="rounded-md px-3 py-2 text-sm font-bold {{ publishers.getNextPageUrl() ? 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900' : 'pointer-events-none text-slate-400' }}">Siguiente</a>
+<div class="mt-6 flex items-center justify-between rounded-lg border border-emerald-100 bg-white p-4 dark:border-slate-800 dark:bg-slate-950">
+  <a href="{{ publishers.getPreviousPageUrl() || '#' }}" class="rounded-lg px-3 py-2 text-sm font-bold {{ publishers.getPreviousPageUrl() ? 'text-slate-800 hover:bg-emerald-50 dark:text-slate-200 dark:hover:bg-[#7a1438]' : 'pointer-events-none text-slate-400' }}">Anterior</a>
+  <span class="text-sm font-bold text-slate-600">Pagina {{ publishers.currentPage }} de {{ publishers.lastPage }}</span>
+  <a href="{{ publishers.getNextPageUrl() || '#' }}" class="rounded-lg px-3 py-2 text-sm font-bold {{ publishers.getNextPageUrl() ? 'text-slate-800 hover:bg-emerald-50 dark:text-slate-200 dark:hover:bg-[#7a1438]' : 'pointer-events-none text-slate-400' }}">Siguiente</a>
 </div>
 
 @include('partials/page_end')

@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ pageTitle || 'Biblioteca Local' }}</title>
+    <title>{{ pageTitle ? pageTitle + ' | Biblioteca Coyote UTT' : 'Biblioteca Coyote UTT' }}</title>
+    <link rel="icon" type="image/svg+xml" href="/images/coyote-utt.svg" />
     {{ csrfMeta() }}
     @vite(['resources/js/app.ts'])
     @stack('dumper')

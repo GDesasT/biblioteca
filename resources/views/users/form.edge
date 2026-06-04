@@ -2,16 +2,16 @@
 @include('partials/head')
 @include('partials/page_start')
 
-<section class="mx-auto max-w-3xl rounded-md border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+<section class="mx-auto max-w-3xl rounded-lg border border-emerald-100 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
   <div class="mb-6 flex items-center justify-between">
     <div>
-      <p class="text-sm font-bold text-slate-500">Directorio</p>
+      <p class="text-sm font-bold text-slate-600">Directorio</p>
       <h2 class="text-2xl font-black">{{ pageTitle }}</h2>
     </div>
-    <a href="/users" class="rounded-md border border-slate-300 px-3 py-2 text-sm font-bold dark:border-slate-700">Volver</a>
+    <a href="/users" class="rounded-lg border border-emerald-200 px-3 py-2 text-sm font-bold dark:border-slate-700">Volver</a>
   </div>
 
-  <form method="POST" action="{{ userRecord ? `/users/${userRecord.id}` : '/users' }}" class="grid gap-5 md:grid-cols-2">
+  <form method="POST" action="{{ userRecord ? `/users/${userRecord.id}?_method=PUT` : '/users' }}" class="grid gap-5 md:grid-cols-2">
     {{ csrfField() }}
     @if(userRecord)
       <input type="hidden" name="_method" value="PUT" />
@@ -19,12 +19,12 @@
 
     <label class="block">
       <span class="text-sm font-bold">Numero</span>
-      <input name="userNumber" value="{{ userRecord ? userRecord.userNumber : '' }}" required class="focus-ring mt-2 w-full rounded-md border border-slate-300 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900" />
+      <input name="userNumber" value="{{ userRecord ? userRecord.userNumber : '' }}" required class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-[#7a1438]" />
     </label>
 
     <label class="block">
       <span class="text-sm font-bold">Rol</span>
-      <select name="roleId" required class="focus-ring mt-2 w-full rounded-md border border-slate-300 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900">
+      <select name="roleId" required class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-[#7a1438]">
         @each((role) in roles)
           <option value="{{ role.id }}" {{ userRecord && userRecord.roleId === role.id ? 'selected' : '' }}>{{ role.name }}</option>
         @endeach
@@ -33,24 +33,24 @@
 
     <label class="block md:col-span-2">
       <span class="text-sm font-bold">Nombre completo</span>
-      <input name="fullName" value="{{ userRecord ? userRecord.fullName : '' }}" required class="focus-ring mt-2 w-full rounded-md border border-slate-300 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900" />
+      <input name="fullName" value="{{ userRecord ? userRecord.fullName : '' }}" required class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-[#7a1438]" />
     </label>
 
     <label class="block md:col-span-2">
       <span class="text-sm font-bold">Email</span>
-      <input name="email" type="email" value="{{ userRecord ? userRecord.email : '' }}" required class="focus-ring mt-2 w-full rounded-md border border-slate-300 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900" />
+      <input name="email" type="email" value="{{ userRecord ? userRecord.email : '' }}" required class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-[#7a1438]" />
     </label>
 
     @if(!userRecord)
       <label class="block md:col-span-2">
         <span class="text-sm font-bold">Password</span>
-        <input name="password" type="password" value="password123" required class="focus-ring mt-2 w-full rounded-md border border-slate-300 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-900" />
+        <input name="password" type="password" value="password123" required class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-[#7a1438]" />
       </label>
     @endif
 
     <div class="md:col-span-2 flex justify-end gap-3">
-      <a href="/users" class="rounded-md border border-slate-300 px-4 py-2.5 text-sm font-bold dark:border-slate-700">Cancelar</a>
-      <button class="focus-ring rounded-md bg-teal-600 px-4 py-2.5 text-sm font-black text-white hover:bg-teal-700">Guardar</button>
+      <a href="/users" class="rounded-lg border border-emerald-200 px-4 py-2.5 text-sm font-bold dark:border-slate-700">Cancelar</a>
+      <button class="focus-ring rounded-lg bg-[#18b98f] px-4 py-2.5 text-sm font-black text-white hover:bg-[#129b78]">Guardar</button>
     </div>
   </form>
 </section>

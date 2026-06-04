@@ -2,8 +2,10 @@ import BooksController from '#controllers/books_controller'
 import CategoriesController from '#controllers/categories_controller'
 import DashboardController from '#controllers/dashboard_controller'
 import HomeController from '#controllers/home_controller'
+import ImportUsersController from '#controllers/import_users_controller'
 import InventoryController from '#controllers/inventory_controller'
 import LoansController from '#controllers/loans_controller'
+import ProfileController from '#controllers/profile_controller'
 import PublishersController from '#controllers/publishers_controller'
 import ReportsController from '#controllers/reports_controller'
 import SessionController from '#controllers/session_controller'
@@ -29,6 +31,10 @@ router
 router
   .group(() => {
     router.post('/logout', [SessionController, 'destroy']).as('logout')
+
+    router.get('/profile', [ProfileController, 'edit']).as('profile.edit')
+    router.put('/profile', [ProfileController, 'update']).as('profile.update')
+    router.put('/profile/password', [ProfileController, 'updatePassword']).as('profile.password')
 
     router.get('/dashboard', [DashboardController, 'index']).as('dashboard')
 
@@ -73,6 +79,7 @@ router
         router.put('/categories/:id', [CategoriesController, 'update']).as('categories.update')
         router.delete('/categories/:id', [CategoriesController, 'destroy']).as('categories.destroy')
 
+        router.get('/imports/users', [ImportUsersController, 'index']).as('imports.users')
         router.get('/reports', [ReportsController, 'index']).as('reports.index')
       })
       .use(middleware.role(admin))

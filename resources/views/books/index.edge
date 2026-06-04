@@ -2,59 +2,59 @@
 @include('partials/head')
 @include('partials/page_start')
 
-<section class="mb-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+<section class="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
   <div>
-    <p class="text-sm font-bold text-slate-500">Catalogo</p>
-    <h2 class="text-2xl font-black">Libros registrados</h2>
+    <p class="text-sm font-black uppercase tracking-wide text-[#7a1438]">Catalogo UTT</p>
+    <h2 class="text-3xl font-black">Libros registrados</h2>
   </div>
   @if(authUser.role.name !== 'Estudiante')
-    <a href="/books/create" class="focus-ring inline-flex rounded-md bg-teal-600 px-4 py-2.5 text-sm font-black text-white hover:bg-teal-700">Nuevo libro</a>
+    <a href="/books/create" class="focus-ring inline-flex rounded-lg bg-[#18b98f] px-5 py-3 text-sm font-black text-white shadow-lg shadow-emerald-500/20 hover:bg-[#129b78]">Nuevo libro</a>
   @endif
 </section>
 
-<form method="GET" action="/books" class="mb-5 grid gap-3 rounded-md border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950 md:grid-cols-5">
-  <input name="search" value="{{ filters.search }}" class="focus-ring rounded-md border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900" placeholder="Titulo, autor, ISBN..." />
-  <select name="categoryId" class="focus-ring rounded-md border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900">
+<form method="GET" action="/books" class="mb-7 grid gap-3 rounded-lg border border-emerald-100 bg-white/90 p-4 shadow-sm md:grid-cols-5">
+  <input name="search" value="{{ filters.search }}" class="focus-ring rounded-lg border border-emerald-200 px-3 py-3 text-sm" placeholder="Titulo, autor, ISBN..." />
+  <select name="categoryId" class="focus-ring rounded-lg border border-emerald-200 px-3 py-3 text-sm">
     <option value="">Todas las categorias</option>
     @each((category) in categories)
       <option value="{{ category.id }}" {{ String(category.id) === String(filters.categoryId) ? 'selected' : '' }}>{{ category.name }}</option>
     @endeach
   </select>
-  <select name="publisherId" class="focus-ring rounded-md border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900">
+  <select name="publisherId" class="focus-ring rounded-lg border border-emerald-200 px-3 py-3 text-sm">
     <option value="">Todas las editoriales</option>
     @each((publisher) in publishers)
       <option value="{{ publisher.id }}" {{ String(publisher.id) === String(filters.publisherId) ? 'selected' : '' }}>{{ publisher.name }}</option>
     @endeach
   </select>
-  <select name="type" class="focus-ring rounded-md border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900">
+  <select name="type" class="focus-ring rounded-lg border border-emerald-200 px-3 py-3 text-sm">
     <option value="">Todos los tipos</option>
     <option value="physical" {{ filters.type === 'physical' ? 'selected' : '' }}>Fisico</option>
     <option value="digital" {{ filters.type === 'digital' ? 'selected' : '' }}>Digital</option>
     <option value="audiobook" {{ filters.type === 'audiobook' ? 'selected' : '' }}>Audiolibro</option>
   </select>
   <div class="flex gap-2">
-    <select name="availability" class="focus-ring min-w-0 flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900">
+    <select name="availability" class="focus-ring min-w-0 flex-1 rounded-lg border border-emerald-200 px-3 py-3 text-sm">
       <option value="">Stock</option>
       <option value="available" {{ filters.availability === 'available' ? 'selected' : '' }}>Disponible</option>
       <option value="unavailable" {{ filters.availability === 'unavailable' ? 'selected' : '' }}>Agotado</option>
     </select>
-    <button class="focus-ring rounded-md bg-slate-900 px-4 py-2 text-sm font-black text-white dark:bg-white dark:text-slate-950">Filtrar</button>
+    <button class="focus-ring rounded-lg bg-[#7a1438] px-5 py-3 text-sm font-black text-white shadow-lg shadow-[#7a1438]/15">Filtrar</button>
   </div>
 </form>
 
-<section class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+<section class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
   @each((book) in books)
-    <article class="rounded-md border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+    <article class="rounded-lg border border-emerald-100 bg-white p-5 shadow-sm">
       <div class="flex gap-4">
-        <img src="{{ book.coverImage || '/images/covers/cover-1.svg' }}" alt="" class="h-32 w-24 rounded-md object-cover" />
+        <img src="{{ book.coverImage || '/images/covers/cover-1.svg' }}" alt="" onerror="this.onerror=null;this.src='/images/covers/cover-1.svg'" class="h-36 w-24 rounded-lg border border-emerald-100 bg-emerald-50 object-cover shadow-sm" />
         <div class="min-w-0 flex-1">
           <div class="mb-2 flex flex-wrap gap-2">
             <span class="badge {{ book.availableUnits > 0 ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200' : 'bg-rose-50 text-rose-700 dark:bg-rose-500/15 dark:text-rose-200' }}">{{ book.availableUnits > 0 ? 'Disponible' : 'Agotado' }}</span>
-            <span class="badge bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">{{ book.type }}</span>
+            <span class="badge bg-[#fff1f6] text-[#7a1438]">{{ book.type }}</span>
           </div>
           <h3 class="line-clamp-2 font-black">{{ book.title }}</h3>
-          <p class="mt-1 text-sm text-slate-500">{{ book.author }}</p>
-          <p class="mt-2 text-xs font-bold text-slate-500">{{ book.category.name }} - {{ book.publisher.name }}</p>
+          <p class="mt-1 text-sm text-slate-600">{{ book.author }}</p>
+          <p class="mt-2 text-xs font-bold text-slate-600">{{ book.category.name }} - {{ book.publisher.name }}</p>
           <p class="mt-2 text-sm"><strong>{{ book.availableUnits }}</strong> de {{ book.totalUnits }} unidades</p>
         </div>
       </div>
@@ -63,15 +63,15 @@
         @if(authUser.role.name === 'Estudiante')
           <form method="POST" action="/student/books/{{ book.id }}/request">
             {{ csrfField() }}
-            <button class="focus-ring rounded-md bg-teal-600 px-3 py-2 text-sm font-black text-white hover:bg-teal-700 disabled:opacity-50" {{ book.availableUnits <= 0 ? 'disabled' : '' }}>Solicitar</button>
+            <button class="focus-ring rounded-lg bg-[#18b98f] px-3 py-2 text-sm font-black text-white hover:bg-[#129b78] disabled:opacity-50" {{ book.availableUnits <= 0 ? 'disabled' : '' }}>Solicitar</button>
           </form>
         @else
-          <a href="/books/{{ book.id }}/edit" class="focus-ring rounded-md border border-slate-300 px-3 py-2 text-sm font-bold hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-900">Editar</a>
+          <a href="/books/{{ book.id }}/edit" class="focus-ring rounded-lg border border-emerald-200 bg-white px-3 py-2 text-sm font-bold text-slate-800 hover:bg-[#f8fffb]">Editar</a>
           @if(authUser.role.name === 'Administrador')
-            <form method="POST" action="/books/{{ book.id }}">
+            <form method="POST" action="/books/{{ book.id }}?_method=DELETE">
               {{ csrfField() }}
               <input type="hidden" name="_method" value="DELETE" />
-              <button class="focus-ring rounded-md border border-rose-200 px-3 py-2 text-sm font-bold text-rose-700 hover:bg-rose-50 dark:border-rose-900 dark:hover:bg-rose-500/10">Eliminar</button>
+              <button class="focus-ring rounded-lg border border-rose-200 px-3 py-2 text-sm font-bold text-rose-700 hover:bg-rose-50 dark:border-rose-900 dark:hover:bg-rose-500/10">Eliminar</button>
             </form>
           @endif
         @endif
@@ -80,10 +80,10 @@
   @endeach
 </section>
 
-<div class="mt-6 flex items-center justify-between rounded-md border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950">
-  <a href="{{ books.getPreviousPageUrl() || '#' }}" class="rounded-md px-3 py-2 text-sm font-bold {{ books.getPreviousPageUrl() ? 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900' : 'pointer-events-none text-slate-400' }}">Anterior</a>
-  <span class="text-sm font-bold text-slate-500">Pagina {{ books.currentPage }} de {{ books.lastPage }}</span>
-  <a href="{{ books.getNextPageUrl() || '#' }}" class="rounded-md px-3 py-2 text-sm font-bold {{ books.getNextPageUrl() ? 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900' : 'pointer-events-none text-slate-400' }}">Siguiente</a>
+<div class="mt-6 flex items-center justify-between rounded-lg border border-emerald-100 bg-white p-4 dark:border-slate-800 dark:bg-slate-950">
+  <a href="{{ books.getPreviousPageUrl() || '#' }}" class="rounded-lg px-3 py-2 text-sm font-bold {{ books.getPreviousPageUrl() ? 'text-slate-800 hover:bg-emerald-50 dark:text-slate-200 dark:hover:bg-[#7a1438]' : 'pointer-events-none text-slate-400' }}">Anterior</a>
+  <span class="text-sm font-bold text-slate-600">Pagina {{ books.currentPage }} de {{ books.lastPage }}</span>
+  <a href="{{ books.getNextPageUrl() || '#' }}" class="rounded-lg px-3 py-2 text-sm font-bold {{ books.getNextPageUrl() ? 'text-slate-800 hover:bg-emerald-50 dark:text-slate-200 dark:hover:bg-[#7a1438]' : 'pointer-events-none text-slate-400' }}">Siguiente</a>
 </div>
 
 @include('partials/page_end')

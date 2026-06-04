@@ -42,6 +42,28 @@ export default class ReportsController {
       .orderBy('loans.due_date', 'asc')
       .limit(10)
 
-    return view.render('reports/index', { monthlyLoans, topBooks, popularCategories, overdueUsers })
+    const monthlyLoansChronological = [...monthlyLoans].reverse()
+    const monthlyLoansChart = {
+      labels: monthlyLoansChronological.map((row) => row.period),
+      values: monthlyLoansChronological.map((row) => Number(row.total ?? 0)),
+    }
+    const topBooksChart = {
+      labels: topBooks.map((book) => book.title),
+      values: topBooks.map((book) => Number(book.total ?? 0)),
+    }
+    const popularCategoriesChart = {
+      labels: popularCategories.map((category) => category.name),
+      values: popularCategories.map((category) => Number(category.total ?? 0)),
+    }
+
+    return view.render('reports/index', {
+      monthlyLoans,
+      topBooks,
+      popularCategories,
+      overdueUsers,
+      monthlyLoansChart: JSON.stringify(monthlyLoansChart),
+      topBooksChart: JSON.stringify(topBooksChart),
+      popularCategoriesChart: JSON.stringify(popularCategoriesChart),
+    })
   }
 }

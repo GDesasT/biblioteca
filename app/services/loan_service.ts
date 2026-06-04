@@ -1,5 +1,5 @@
 import Book from '#models/book'
-import Loan from '#models/loan'
+import Loan, { MAX_RENEWALS } from '#models/loan'
 import db from '@adonisjs/lucid/services/db'
 import { DateTime } from 'luxon'
 
@@ -8,7 +8,7 @@ export default class LoanService {
     await Loan.query()
       .whereNull('returnedAt')
       .whereIn('status', ['ACTIVE', 'RENEWED'])
-      .where('dueDate', '<', DateTime.now().toSQL())
+      .where('dueDate', '<', DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss'))
       .update({ status: 'OVERDUE' })
   }
 
@@ -85,8 +85,8 @@ export default class LoanService {
       throw new Error('No se puede renovar un prestamo vencido.')
     }
 
-    if (loan.renewalCount >= 2) {
-      throw new Error('Este prestamo ya alcanzo el maximo de 2 renovaciones.')
+    if (loan.renewalCount >= MAX_RENEWALS) {
+      throw new Error('Este prestamo ya alcanzo el maximo de 1 renovacion.')
     }
 
     loan.renewalCount += 1

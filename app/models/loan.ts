@@ -5,6 +5,8 @@ import { DateTime } from 'luxon'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 
 export type LoanStatus = 'ACTIVE' | 'RENEWED' | 'RETURNED' | 'OVERDUE'
+export const FINE_PER_LATE_DAY = 10
+export const MAX_RENEWALS = 1
 
 export default class Loan extends BaseModel {
   @column({ isPrimary: true })
@@ -48,6 +50,20 @@ export default class Loan extends BaseModel {
   }
 
   get renewalsAvailable() {
-    return Math.max(2 - this.renewalCount, 0)
+    return Math.max(MAX_RENEWALS - this.renewalCount, 0)
+  }
+
+  get daysLate() {
+    const comparisonDate = this.returnedAt ?? DateTime.now()
+
+    if (comparisonDate <= this.dueDate) {
+      return 0
+    }
+
+    return Math.ceil(comparisonDate.diff(this.dueDate, 'days').days)
+  }
+
+  get fineAmount() {
+    return this.daysLate * FINE_PER_LATE_DAY
   }
 }

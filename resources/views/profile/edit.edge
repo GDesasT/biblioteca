@@ -1,0 +1,99 @@
+@let(pageTitle = 'Mi perfil')
+@include('partials/head')
+@include('partials/page_start')
+
+<section class="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+  <div>
+    <p class="text-sm font-black uppercase tracking-wide text-[#7a1438]">Cuenta personal</p>
+    <h2 class="text-3xl font-black">Editar perfil</h2>
+    <p class="mt-2 max-w-3xl text-sm font-semibold text-slate-600">
+      Actualiza tus datos y cambia la contrasena inicial por una que solo tu conozcas.
+    </p>
+  </div>
+  <span class="rounded-lg bg-emerald-50 px-4 py-3 text-sm font-black text-emerald-700">{{ authUser.role.name }}</span>
+</section>
+
+<section class="grid gap-6 xl:grid-cols-[0.8fr_1.2fr]">
+  <div class="rounded-lg border border-emerald-100 bg-white p-6 shadow-sm">
+    <div class="flex items-center gap-4">
+      <div class="grid h-16 w-16 place-items-center rounded-lg bg-[#7a1438] text-xl font-black text-white">
+        {{ authUser.initials }}
+      </div>
+      <div>
+        <p class="text-xl font-black text-slate-950">{{ authUser.fullName }}</p>
+        <p class="text-sm font-semibold text-slate-600">{{ authUser.email }}</p>
+      </div>
+    </div>
+
+    <div class="mt-6 grid gap-3">
+      <div class="rounded-lg bg-emerald-50 p-4">
+        <p class="text-xs font-black uppercase text-emerald-700">Numero de usuario</p>
+        <p class="mt-1 font-black text-slate-950">{{ authUser.userNumber }}</p>
+      </div>
+      <div class="rounded-lg bg-[#fff1f6] p-4">
+        <p class="text-xs font-black uppercase text-[#7a1438]">Rol actual</p>
+        <p class="mt-1 font-black text-slate-950">{{ authUser.role.name }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="rounded-lg border border-emerald-100 bg-white p-6 shadow-sm">
+    <p class="text-sm font-black uppercase tracking-wide text-[#7a1438]">Datos personales</p>
+    <h3 class="mt-1 text-xl font-black">Informacion de contacto</h3>
+
+    <form method="POST" action="/profile?_method=PUT" class="mt-5 grid gap-5 md:grid-cols-2">
+      {{ csrfField() }}
+      <input type="hidden" name="_method" value="PUT" />
+
+      <label class="block md:col-span-2">
+        <span class="text-sm font-black text-slate-700">Nombre completo</span>
+        <input name="fullName" value="{{ authUser.fullName }}" required class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm" />
+      </label>
+
+      <label class="block md:col-span-2">
+        <span class="text-sm font-black text-slate-700">Correo</span>
+        <input name="email" type="email" value="{{ authUser.email }}" required class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm" />
+      </label>
+
+      <div class="md:col-span-2 flex justify-end">
+        <button class="focus-ring rounded-lg bg-[#18b98f] px-4 py-3 text-sm font-black text-white shadow-lg shadow-emerald-500/20 hover:bg-[#129b78]">
+          Guardar perfil
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="mt-6 rounded-lg border border-emerald-100 bg-white p-6 shadow-sm">
+  <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div>
+      <p class="text-sm font-black uppercase tracking-wide text-[#7a1438]">Seguridad</p>
+      <h3 class="text-xl font-black">Cambiar contrasena</h3>
+      <p class="mt-2 text-sm font-semibold text-slate-600">La nueva contrasena debe tener al menos 8 caracteres.</p>
+    </div>
+    <span class="rounded-lg bg-[#fff1f6] px-4 py-3 text-sm font-black text-[#7a1438]">Recomendado al primer ingreso</span>
+  </div>
+
+  <form method="POST" action="/profile/password?_method=PUT" class="mt-5 grid gap-5 md:grid-cols-2">
+    {{ csrfField() }}
+    <input type="hidden" name="_method" value="PUT" />
+
+    <label class="block">
+      <span class="text-sm font-black text-slate-700">Nueva contrasena</span>
+      <input name="password" type="password" required class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm" placeholder="Minimo 8 caracteres" />
+    </label>
+
+    <label class="block">
+      <span class="text-sm font-black text-slate-700">Confirmar contrasena</span>
+      <input name="passwordConfirmation" type="password" required class="focus-ring mt-2 w-full rounded-lg border border-emerald-200 px-3 py-2.5 text-sm" placeholder="Repite la contrasena" />
+    </label>
+
+    <div class="md:col-span-2 flex justify-end">
+      <button class="focus-ring rounded-lg bg-[#7a1438] px-4 py-3 text-sm font-black text-white shadow-lg shadow-[#7a1438]/20 hover:bg-[#64102e]">
+        Actualizar contrasena
+      </button>
+    </div>
+  </form>
+</section>
+
+@include('partials/page_end')

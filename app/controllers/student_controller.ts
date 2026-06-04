@@ -1,5 +1,5 @@
 import Book from '#models/book'
-import Loan from '#models/loan'
+import Loan, { FINE_PER_LATE_DAY } from '#models/loan'
 import LoanService from '#services/loan_service'
 import RecommendationService from '#services/recommendation_service'
 import type { HttpContext } from '@adonisjs/core/http'
@@ -16,7 +16,28 @@ export default class StudentController {
 
     const recommendations = await RecommendationService.forUser(auth.user!.id, 4)
 
-    return view.render('student/index', { loans, recommendations })
+    const allLoans = await Loan.query()
+      .where('userId', auth.user!.id)
+      .preload('book')
+      .orderBy('dueDate', 'asc')
+
+    const fineLoans = allLoans.filter((loan) => loan.fineAmount > 0)
+    const activeFineTotal = loans.reduce((total, loan) => total + loan.fineAmount, 0)
+    const fineTotal = fineLoans.reduce((total, loan) => total + loan.fineAmount, 0)
+    const fineChart = {
+      labels: fineLoans.slice(0, 6).map((loan) => loan.book.title),
+      values: fineLoans.slice(0, 6).map((loan) => loan.fineAmount),
+    }
+
+    return view.render('student/index', {
+      loans,
+      recommendations,
+      fineLoans,
+      fineTotal,
+      activeFineTotal,
+      finePerLateDay: FINE_PER_LATE_DAY,
+      fineChart: JSON.stringify(fineChart),
+    })
   }
 
   async history({ auth, view }: HttpContext) {

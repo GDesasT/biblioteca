@@ -1,6 +1,7 @@
 {
   "extends": "@adonisjs/tsconfig/tsconfig.app.json",
   "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
     "rootDir": "./",
     "outDir": "./build"
   }

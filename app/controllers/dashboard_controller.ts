@@ -21,7 +21,7 @@ export default class DashboardController {
         User.query().count('* as total').first(),
         Loan.query().whereIn('status', ['ACTIVE', 'RENEWED']).count('* as total').first(),
         Loan.query().where('status', 'OVERDUE').count('* as total').first(),
-        Book.query().sum('totalUnits as totalUnits').sum('availableUnits as availableUnits').first(),
+        Book.query().sum('total_units as totalUnits').sum('available_units as availableUnits').first(),
       ])
 
     const totalUnits = Number(inventoryTotals?.$extras.totalUnits ?? 0)
@@ -46,6 +46,19 @@ export default class DashboardController {
       .orderBy('total', 'desc')
       .limit(5)
 
+    const inventoryChart = {
+      labels: ['Disponibles', 'Prestados'],
+      values: [availableUnits, Math.max(totalUnits - availableUnits, 0)],
+    }
+    const topBooksChart = {
+      labels: topBooks.map((book) => book.title),
+      values: topBooks.map((book) => Number(book.total ?? 0)),
+    }
+    const popularCategoriesChart = {
+      labels: popularCategories.map((category) => category.name),
+      values: popularCategories.map((category) => Number(category.total ?? 0)),
+    }
+
     return view.render('dashboard/index', {
       stats: {
         books: Number(booksCount?.$extras.total ?? 0),
@@ -58,6 +71,9 @@ export default class DashboardController {
       },
       topBooks,
       popularCategories,
+      inventoryChart: JSON.stringify(inventoryChart),
+      topBooksChart: JSON.stringify(topBooksChart),
+      popularCategoriesChart: JSON.stringify(popularCategoriesChart),
     })
   }
 }
