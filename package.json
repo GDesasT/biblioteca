@@ -39,7 +39,6 @@
   "devDependencies": {
     "@adonisjs/eslint-config": "^3.1.0",
     "@adonisjs/prettier-config": "^1.5.0",
-    "@adonisjs/tsconfig": "^2.0.0",
     "@japa/assert": "^4.2.0",
     "@japa/browser-client": "^2.3.0",
     "@japa/plugin-adonisjs": "^4.0.0",
@@ -62,6 +61,7 @@
     "@adonisjs/session": "^7.7.1",
     "@adonisjs/shield": "^8.2.0",
     "@adonisjs/static": "^1.1.1",
+    "@adonisjs/tsconfig": "^2.0.0",
     "@adonisjs/vite": "^4.0.0",
     "@tailwindcss/vite": "^4.3.0",
     "@vinejs/vine": "^4.4.0",
